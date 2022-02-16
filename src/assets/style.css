@@ -1,0 +1,16 @@
+html,
+body,
+header,
+h3 {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    color: #ffffff;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    height: 34px;
+}
