@@ -1,12 +1,11 @@
 <template>
-    <div class="app__movies" v-if="movies">
+    <div class="app__movies" v-if="GET_MOVIES">
         <TheMovie
             v-for="movie in movies"
             :key="movie.id"
             :id="movie.id"
             :img="movie.img"
             :title="movie.title"
-            @removeItem="removeItem"
         />
     </div>
 </template>
@@ -14,25 +13,23 @@
 <script>
 import TheMovie from "./TheMovie.vue";
 
+// 2 способ
+import { mapGetters } from "vuex";
+
 export default {
     name: "AppMovies",
     components: {
         TheMovie,
     },
-    data() {
-        return {
-            movies: [
-                {
-                    id: 1,
-                    img: "https://upload.wikimedia.org/wikipedia/ru/thumb/b/b9/Intouchables.jpg/203px-Intouchables.jpg",
-                    title: "1+1 (Неприкасаемые)",
-                },
-            ],
-        };
+    created() {
+        this.$store.dispatch("movies/FETCH_MOVIES");
     },
-    methods: {
-        removeItem(id) {
-            this.movies = this.movies.filter((d) => d.id !== id);
+    computed: {
+        // 2 способ
+        ...mapGetters("movies", ["GET_MOVIES"]),
+        movies() {
+            // 1 способ
+            return this.$store.getters["movies/GET_MOVIES"];
         },
     },
 };

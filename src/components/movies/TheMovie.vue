@@ -2,11 +2,13 @@
     <div class="the__movie">
         <img :src="img" :alt="title" />
         <h3>{{ title }}</h3>
-        <button class="btn--remove" @click="$emit('removeItem', id)">Удалить</button>
+        <button class="btn--remove" @click="handleRemoveMovie">Удалить</button>
     </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
     name: "TheMovie",
     props: {
@@ -21,6 +23,16 @@ export default {
         img: {
             type: String,
             required: true,
+        },
+    },
+    methods: {
+        ...mapMutations("movies", ["REMOVE_MOVIES"]),
+        handleRemoveMovie() {
+            // 1-ый споособ
+            // this.$store.commit("REMOVE_MOVIES", { id: this.id });
+
+            // 2-ой способ
+            this.REMOVE_MOVIES({ id: this.id });
         },
     },
 };
