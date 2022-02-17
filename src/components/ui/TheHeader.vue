@@ -1,13 +1,25 @@
 <template>
     <header>
-        <h3>Количество фильмов:</h3>
-        <button class="btn--primary">Получить +1 фильм</button>
+        <h3>
+            Количество фильмов: <span v-if="GET_MOVIES">{{ GET_MOVIES.length }}</span>
+        </h3>
+        <button class="btn--primary" @click="handleGetMovie">Получить +1 фильм</button>
     </header>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "TheHeader",
+    computed: {
+        ...mapGetters("movies", ["GET_MOVIES"]),
+    },
+    methods: {
+        handleGetMovie() {
+            this.$store.dispatch("movies/FETCH_MOVIE");
+        },
+    },
 };
 </script>
 
